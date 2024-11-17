@@ -1,14 +1,14 @@
 # Mandatory items:
 
 [general]
-name=transform_coords
+name=Transform Coords
 qgisMinimumVersion=3.0
-description=Transform decimal/grade-minute-second coordinates to UTM (17S, 18S and 19S). Can also make points on the selected coordinates.
-version=1.0
+description=Transform decimal/grade-minute-second coordinates to UTM. Can also make points on the selected coordinates.
+version=1.1
 author=Joomkin
 email=vicente.rivas@uc.cl
 
-about=Transformar coordenadas de un sistema, a otro. Por ejemplo, pasar de grados//minuto//segundo a UTM
+about=Transform coordinates from one system (decimal/grade-minute-second) to another (UTM) and make points there. 
 
 tracker=https://github.com/Joomkin/QGIS-Coords-Transform/issues
 repository=https://github.com/Joomkin/QGIS-Coords-Transform
@@ -17,13 +17,13 @@ repository=https://github.com/Joomkin/QGIS-Coords-Transform
 # Recommended items:
 
 hasProcessingProvider=no
-# Uncomment the following line and add your changelog: Nothing really.
-# changelog=
+# Uncomment the following line and add your changelog: Added things.
+changelog=Code improvement (it looks nicer :3)Added support to all UTM zones as well as Instructions menu and several other smaller improvements I forgot already uwu
 
 # Tags are comma separated with spaces allowed
-tags=python, UTM, Chile, transformation
+tags=python, UTM, Chile, transformation, coordinates
 
-homepage=http://homepage
+homepage=https://plugins.qgis.org/plugins/transform_coordinates/
 category=Plugins, Vector
 icon=icon.png
 # experimental flag

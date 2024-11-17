@@ -1,8 +1,10 @@
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtGui import QIcon, QFont, QColor
 from qgis.PyQt import QtWidgets
 from qgis.PyQt.QtWidgets import QAction
-from qgis.core import QgsCoordinateReferenceSystem, QgsVectorLayer, QgsFeature, QgsGeometry, QgsCoordinateTransform, QgsProject, QgsPointXY, QgsWkbTypes, QgsField
+from qgis.core import (QgsCoordinateReferenceSystem, QgsVectorLayer, QgsFeature, QgsGeometry, QgsCoordinateTransform, 
+                        QgsProject, QgsPointXY, QgsWkbTypes, QgsField, QgsTextFormat, QgsTextBufferSettings, 
+                        QgsPalLayerSettings, QgsVectorLayerSimpleLabeling)
 
 
 # Initialize Qt resources from file resources.py
@@ -50,7 +52,6 @@ class TransformCoords:
             self.iface.addPluginToVectorMenu(self.tr(u'&Transform Coords'), action)
 
         self.actions.append(action)
-
         return action
 
     def run(self):
@@ -69,30 +70,27 @@ class TransformCoords:
 
                 # Calls the transform function
                 x, y = self.transformar_coordenadas(latitud, longitud, huso)
-
                 # Show results 
                 self.dlg.result_line_edit.setText(f"Coordenadas UTM: X: {x}, Y: {y}")
 
             except ValueError as e:
-                self.dlg.result_label.setText(str(e))
+                self.dlg.result_line_edit.setText(str(e))
 
-    def transformar_coordenadas(self, latitud, longitud, huso): # This is the method that will transform the coords
-        crs_wgs84 = QgsCoordinateReferenceSystem("EPSG:4326")
-        crs_destino = { 
-            '17S [islas]': QgsCoordinateReferenceSystem("EPSG:32717"),
-            '18S [sur]': QgsCoordinateReferenceSystem("EPSG:32718"),
-            '19S [centro/norte]': QgsCoordinateReferenceSystem("EPSG:32719"),
-        }.get(huso)
+    def transformar_coordenadas(self, latitud, longitud, huso, huso_destino=0): # This is the method that will transform the coords
+        if huso_destino == 0: # Decimales or Grado//Minuto//Segundo
+            crs_wgs84 = QgsCoordinateReferenceSystem("EPSG:4326")
 
-        if not crs_destino:
-            raise ValueError("Huso no válido. Elige 17S, 18S o 19S.")
-
-        transformacion = QgsCoordinateTransform(crs_wgs84, crs_destino, QgsProject.instance())
-        punto_origen = QgsPointXY(longitud, latitud)
-        punto_destino = transformacion.transform(punto_origen)
-
-        x_decimales = '%.3f'%(punto_destino.x())
-        y_decimales = '%.3f'%(punto_destino.y())
+            transformacion = QgsCoordinateTransform(crs_wgs84, huso, QgsProject.instance())
+            punto_origen = QgsPointXY(longitud, latitud)
+            punto_transformado = transformacion.transform(punto_origen)
+        else: # Para UTM
+            epsg_origen = (huso) # Huso = EPSG en este caso. Ejemplo: "EPSG:32719"
+            epsg_destino = (huso_destino)
+            transformacion = QgsCoordinateTransform(epsg_origen, epsg_destino, QgsProject.instance())
+            punto_origen = QgsPointXY((latitud), (longitud))
+            punto_transformado = transformacion.transform(punto_origen)
+        x_decimales = int(punto_transformado.x())
+        y_decimales = int(punto_transformado.y())
         return x_decimales, y_decimales
 
     def tr(self, message):
