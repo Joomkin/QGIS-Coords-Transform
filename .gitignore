@@ -1,0 +1,12 @@
+# Python things
+*.pyc
+*.pyo
+__pycache__/
+
+# Compiled things i guess
+*.qrc~
+*.rcc
+
+# Makefile files
+*.o
+Makefile

@@ -1,0 +1,45 @@
+# Mandatory items:
+
+[general]
+name=Transform Coords
+qgisMinimumVersion=3.0
+description=Transform decimal/grade-minute-second coordinates to UTM. Can also make points on the selected coordinates.
+version=1.1.1
+author=Joomkin
+email=vicente.rivas@uc.cl
+
+about=Transform coordinates from one system (decimal/grade-minute-second) to another (UTM) and make points there. 
+
+tracker=https://github.com/Joomkin/QGIS-Coords-Transform/issues
+repository=https://github.com/Joomkin/QGIS-Coords-Transform
+# End of mandatory metadata
+
+# Recommended items:
+
+hasProcessingProvider=no
+# Uncomment the following line and add your changelog: Added things.
+changelog=Improved code :3 Added support to all UTM zones as well as Instructions menu and several other smaller improvements I forgot already uwu
+
+# Tags are comma separated with spaces allowed
+tags=python, UTM, Chile, transformation, coordinates
+
+homepage=https://plugins.qgis.org/plugins/transform_coordinates/
+category=Plugins, Vector
+icon=icono2.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
+# Since QGIS 3.8, a comma separated list of plugins to be installed
+# (or upgraded) can be specified.
+# Check the documentation for more information.
+# plugin_dependencies=None?
+
+Category of the plugin: Raster, Vector, Database or Web
+# category=Vector
+
+# If the plugin can run on QGIS Server.
+server=False
+
